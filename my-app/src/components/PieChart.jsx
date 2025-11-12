@@ -33,19 +33,19 @@ const RankingPieChart = () => {
   const renderCombinedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, percentage }) => {
     const RADIAN = Math.PI / 180;
     
-    // 计算内部百分比的位置（饼块中心）
+    // inside %
     const innerRadius2 = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x1 = cx + innerRadius2 * Math.cos(-midAngle * RADIAN);
     const y1 = cy + innerRadius2 * Math.sin(-midAngle * RADIAN);
     
-    // 计算外部排名的位置（引线末端）
+    // outside labelline
     const outerRadius2 = outerRadius + 40;
     const x2 = cx + outerRadius2 * Math.cos(-midAngle * RADIAN);
     const y2 = cy + outerRadius2 * Math.sin(-midAngle * RADIAN);
     
     return (
       <g>
-        {/* 饼图内部显示百分比 */}
+        {/* % */}
         <text 
           x={x1} 
           y={y1} 
@@ -57,7 +57,7 @@ const RankingPieChart = () => {
           {`${percentage}%`}
         </text>
         
-        {/* 引线外部显示排名 */}
+        {/* labelline */}
         <text 
           x={x2} 
           y={y2} 
@@ -88,6 +88,7 @@ const RankingPieChart = () => {
           <PieChart>
             <Pie
               data={rankingData}
+              isAnimationActive={false}
               cx="50%"
               cy="50%"
               labelLine={{

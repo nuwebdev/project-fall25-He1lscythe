@@ -12,6 +12,7 @@ import rec from './components/Gamedata.js';
 import RankingPieChart from './components/PieChart.jsx';
 import RankingTrendChart from './components/Trending.jsx';
 import DataGrid from './components/DataGrid.jsx';
+import MatchHistoryComp from './components/MatchHistory.jsx';
 
 
 const HomePage = () => {
@@ -40,7 +41,7 @@ const HomePage = () => {
   );
 };
 
-const AboutPage = () => {
+const UploadPage = () => {
   return (
     <div className="w-full bg-gradient-to-br from-purple-100 to-pink-100 pt-4">
       <div className="container mx-auto px-4">
@@ -51,18 +52,18 @@ const AboutPage = () => {
   );
 };
 
-const ServicesPage = () => {
+const MatchHistory = () => {
   return (
     <div className="w-full bg-gradient-to-br from-purple-100 to-pink-100 pt-4">
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">pending</h1>
-        <p className="text-gray-600">x</p>
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">Match History</h1>
       </div>
+        <MatchHistoryComp />
     </div>
   );
 };
 
-const ContactPage = () => {
+const SearchPage = () => {
   return (
     <div className="w-full bg-gradient-to-br from-purple-100 to-pink-100 pt-4">
       <div className="container mx-auto px-4">
@@ -95,9 +96,9 @@ function App() {
           {/* with navbar */}
           <Route element={<Home navHeight={navHeight} setNavHeight={setNavHeight} />}>
             <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/upload" element={<UploadPage />} />
+            <Route path="/matchhistory" element={<MatchHistory />} />
+            <Route path="/search" element={<SearchPage />} />
           </Route>
 
           {/* without navbar */}

@@ -8,9 +8,9 @@ const Navbar = ({ onHeightChange }) => {
   
   const navLinks = [
     { path: '/', name: 'Home'},
-    { path: '/about', name: 'Upload'},
-    { path: '/services', name: 'Recent Games'},
-    { path: '/contact', name: 'search'}
+    { path: '/upload', name: 'Upload'},
+    { path: '/matchhistory', name: 'Recent Games'},
+    { path: '/search', name: 'search'}
   ];
   
   // current page

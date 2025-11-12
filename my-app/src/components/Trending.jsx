@@ -112,6 +112,7 @@ const RankingTrendChart = ({ gCount = 10 }) => {
             <Tooltip content={<CustomTooltip />} />
             <Line 
               type="linear" 
+              isAnimationActive={false}
               dataKey="ranking" 
               stroke="#6366f1" 
               strokeWidth={3}
