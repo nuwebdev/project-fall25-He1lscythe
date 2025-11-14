@@ -77,7 +77,7 @@ const RankingPieChart = () => {
   return (
     <div className="w-full mx-auto p-6 mb-4 border-2">
       <h2 className="text-2xl font-bold text-gray-800 mb-1 text-center">
-        YuuNecro rankings
+        Rankings
       </h2>
       <p className="text-xs text-gray-800 mb-6 text-center">
         (based on recent {totalGames} games)</p>

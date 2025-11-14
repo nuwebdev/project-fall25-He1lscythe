@@ -8,17 +8,17 @@ import NavbarTest, {HomePageTest} from './test/NavbarTest.jsx';
 import Navbar from './components/Navbar.jsx';
 import Register from './components/Register.jsx';
 import Login from './components/Login.jsx';
-import rec from './components/Gamedata.js';
 import RankingPieChart from './components/PieChart.jsx';
 import RankingTrendChart from './components/Trending.jsx';
 import DataGrid from './components/DataGrid.jsx';
-import MatchHistoryComp from './components/MatchHistory.jsx';
+import MatchHistory from './components/MatchHistory.jsx';
 
 
-const HomePage = () => {
+const HomePage = ({ userName = 'YuuNecro' }) => {
+
   return (
     <div className="w-full bg-gray-100 pt-4">
-      <h1 className="items-center font-bold mb-4">Ⓒ YuuNecro</h1>
+      <h1 className="items-center font-bold mb-4">Ⓒ {userName}</h1>
       <div className="flex py-2">
         <div className="w-3/5 flex flex-col">
           <div className=""><RankingTrendChart gCount={20} /></div>
@@ -52,17 +52,6 @@ const UploadPage = () => {
   );
 };
 
-const MatchHistory = () => {
-  return (
-    <div className="w-full bg-gradient-to-br from-purple-100 to-pink-100 pt-4">
-      <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">Match History</h1>
-      </div>
-        <MatchHistoryComp />
-    </div>
-  );
-};
-
 const SearchPage = () => {
   return (
     <div className="w-full bg-gradient-to-br from-purple-100 to-pink-100 pt-4">
@@ -88,6 +77,7 @@ const Home = ({ navHeight, setNavHeight }) => {
 
 function App() {
   const [navHeight, setNavHeight] = useState(0);
+  let userName = 'YuuNecro';
   
   return (
     <BrowserRouter>
@@ -97,7 +87,7 @@ function App() {
           <Route element={<Home navHeight={navHeight} setNavHeight={setNavHeight} />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/upload" element={<UploadPage />} />
-            <Route path="/matchhistory" element={<MatchHistory />} />
+            <Route path="/matchhistory" element={<MatchHistory usrName={userName}/>} />
             <Route path="/search" element={<SearchPage />} />
           </Route>
 
