@@ -1,5 +1,7 @@
 "# project-fall25-He1lscythe" 
 
+video presentation for v0.2 [LiJiacong-v0.2-videopresentation.mkv](https://northeastern-my.sharepoint.com/:v:/g/personal/li_jiaco_northeastern_edu/ERiOkHP3tzdGuW_ouXjMTFoBVe5Er09nhb2npm2s6nIwfQ?e=Cx8Zcd)
+
 # Framework
 
 ```
