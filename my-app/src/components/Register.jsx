@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
 const Register = () => {
+  const navigate = useNavigate();
+  const { register } = useAuth();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -10,6 +13,7 @@ const Register = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -39,20 +43,31 @@ const Register = () => {
     if (!formData.email.includes('@')) {
       newErrors.email = 'Please enter a valid email';
     }
+
+    if (!formData.username.trim()) {
+      newErrors.username = 'Username is required';
+    }
     
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validateForm();
     
     if (Object.keys(newErrors).length === 0) {
-      // Registration functionality would go here
-      console.log('Registration attempted with:', formData);
+      setLoading(true);
+      const result = await register(formData);
+
+      if (result.success) {
+        navigate('/');
+      } else {
+        setErrors({ server: result.error || 'Registration failed.' });
+      }
     } else {
       setErrors(newErrors);
     }
+    setLoading(false);
   };
 
   return (
@@ -73,6 +88,10 @@ const Register = () => {
             <h2 className="text-4xl font-bold text-white mb-2">Create Account</h2>
           </div>
 
+          <div className={`${(errors.server ? 'visible' : 'invisible')} bg-red-500/20 border border-red-400/50 text-white p-3 rounded-xl text-sm`}>
+            {errors.server}
+          </div>
+
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
               <label htmlFor="username" className="text-white/90 text-sm font-medium">
@@ -84,10 +103,14 @@ const Register = () => {
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-white/60 focus:bg-white/20 transition-all duration-300"
+                className={`w-full px-4 py-3 bg-white/10 border ${errors.username ? 'border-red-400' : 'border-white/30'} rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-white/60 focus:bg-white/20 transition-all duration-300`}
                 placeholder="Enter a username"
                 required
+                disabled={loading}
               />
+              {errors.username && (
+                <p className="text-red-300 text-xs mt-1">{errors.username}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -141,6 +164,7 @@ const Register = () => {
                 className={`w-full px-4 py-3 bg-white/10 border ${errors.confirmPassword ? 'border-red-400' : 'border-white/30'} rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-white/60 focus:bg-white/20 transition-all duration-300`}
                 placeholder="Confirm your password"
                 required
+                disabled={loading}
               />
               {errors.confirmPassword && (
                 <p className="text-red-300 text-xs mt-1">{errors.confirmPassword}</p>
@@ -149,9 +173,10 @@ const Register = () => {
 
             <button
               type="submit"
-              className="w-full bg-white text-black font-semibold py-3 px-4 rounded-xl hover:bg-white/90 transform hover:scale-[1.05] transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="w-full bg-white text-black font-semibold py-3 px-4 rounded-xl hover:bg-white/90 transform hover:scale-[1.05] transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:transform-none"
+              disabled={loading}
             >
-              Register
+              {loading ? 'Creating Account...' : 'Register'}
             </button>
           </form>
 

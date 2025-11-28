@@ -7,7 +7,7 @@ const RankingPieChart = () => {
     const rankingCount = { 1: 0, 2: 0, 3: 0, 4: 0 };
     
     rec.forEach(item => {
-      const yuuRecord = item.record.find(player => player.name === 'YuuNecro');
+      const yuuRecord = item.results.find(player => player.name === 'YuuNecro');
       if (yuuRecord) {
         rankingCount[yuuRecord.ranking]++;
       }

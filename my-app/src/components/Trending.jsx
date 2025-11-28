@@ -2,31 +2,31 @@ import React, { useMemo } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Dot, Area, AreaChart } from 'recharts';
 import rec from './Gamedata';
 
-const RankingTrendChart = ({ gCount = 10 }) => {
+const RankingTrendChart = ({ gCount = 10, usrName = 'YuuNecro' }) => {
   const gameCount = Math.min(gCount, rec.length);
     const trendData = useMemo(() => {
     const recentGames = rec.slice(0, gameCount);
     
     const data = recentGames.map((game, index) => {
-      const yuuRecord = game.record.find(player => player.name === 'YuuNecro');
+      const yuuRecord = game.results.find(player => player.name === usrName);
       return {
         game: `Game ${gameCount - index}`,
-        date: game.date.split(' ')[0],
-        shortDate: game.date.split(' ')[0].slice(5),
+        date: game.date,
         ranking: yuuRecord ? yuuRecord.ranking : null,
         score: yuuRecord ? yuuRecord.score : 0,
+        idx: index,
       };
     }).reverse();
     
     return data;
   }, []);
   
-  const CustomTooltip = ({ active, payload, label }) => {
+  const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-200">
-          <p className="font-semibold text-gray-800">{label}</p>
-          <p className="text-gray-600">Date: {payload[0].payload.date}</p>
+          {/* <p className="font-semibold text-gray-800">{label}</p> */}
+          <p className="text-gray-600">{payload[0].payload.date}</p>
           <p className="text-gray-600">
             Ranking: 
             <span className={`font-bold ml-1 ${
@@ -91,23 +91,25 @@ const RankingTrendChart = ({ gCount = 10 }) => {
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
             <XAxis 
-              dataKey="shortDate" 
+              dataKey="idx" 
               tick={{ fontSize: 12 }}
               stroke="#666"
+              hide={true}
             />
             <YAxis 
               domain={[0, 5]}
               ticks={[1, 2, 3, 4]}
               reversed
-              tick={{ fontSize: 12 }}
+              axisLine={false}
+              tick={false}
               stroke="#666"
               label={{ 
                 value: 'Ranking', 
                 angle: -90, 
-                position: 'insideLeft',
+                position: 'outsideLeft',
                 style: { fontSize: 12, fill: '#666', fontWeight: 'bold'}
               }}
-              tickFormatter={(value) => `#${value}`}
+              
             />
             <Tooltip content={<CustomTooltip />} />
             <Line 

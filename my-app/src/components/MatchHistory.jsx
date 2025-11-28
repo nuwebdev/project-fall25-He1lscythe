@@ -1,7 +1,7 @@
 import React from 'react';
 import rec from './Gamedata';
 
-const MatchHistory = ({ usrName = "YuuNecro" }) => {
+const MatchHistory = ({ usrName = 'YuuNecro' }) => {
   return (
     <div className="w-full max-w-6xl mx-auto flex flex-col justify-center bg-gradient-to-br from-purple-100 to-pink-100">
       <div className="w-full container mx-auto px-4">
@@ -10,7 +10,7 @@ const MatchHistory = ({ usrName = "YuuNecro" }) => {
         
       <div className="w-full">
         {rec.map((match, index) => {
-        const players = match.record;
+        const players = match.results;
         
         return (
           <div key={index} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 odd:bg-stone-300">

@@ -1,0 +1,105 @@
+// prisma/schema.prisma
+// 这是数据库模型定义文件
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int                @id @default(autoincrement())
+  username          String             @unique @db.VarChar(50)
+  email             String             @unique @db.VarChar(50)
+  password          String             @db.VarChar(255)
+  open              Boolean            @default(true)
+  session_players   SessionPlayers[]
+  
+  @@map("users")
+}
+
+model GameType {
+  id                     Int            @id @default(autoincrement())
+  type_name              String         @unique @db.VarChar(20)
+  description            String?        @db.VarChar(100)
+  starting_score         Int            @default(25000)
+  ending_score           Int      
+  point_first            Int
+  point_second           Int
+  point_third            Int
+  point_fourth           Int
+  kiriage                Boolean         @default(true)
+  game_sessions          GameSession[]
+  
+  @@map("game_types")
+}
+
+model GameSession {
+  id                     String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  is_detailed            Boolean             @default(true)
+  game_type              Int       
+  game_date              DateTime            @db.Timestamptz(3)
+  session_players        SessionPlayers[]
+  round_records          RoundRecords[]
+
+  fk_game_type           GameType            @relation(fields: [game_type], references: [id], onUpdate: Cascade, onDelete: Restrict)
+  @@map("game_sessions")
+}
+
+model SessionPlayers {
+  session_id          String          @db.Uuid // FK
+  seat                Int             // in (0, 1, 2, 3)
+
+  user_id             Int             // FK
+  final_ranking       Int             // in (1, 2, 3, 4)
+  final_score         Int         
+  final_point         Decimal         @db.Decimal(6, 1)
+  rounds              RoundPlayers[]
+
+  fk_user_id          User            @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  fk_session_id       GameSession     @relation(fields: [session_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  @@id([session_id, seat])            // session + seat as PK
+  @@map("session_players")
+}
+
+model RoundRecords {         
+  session_id          String          @db.Uuid // fk
+  idx                 Int             
+
+  wind                Int             // in (0, 1, 2, 3) = (東, 南, 西, 北)
+  dealer              Int             // in (0, 1, 2, 3)
+  honba               Int             @default(0)
+  kyotaku             Int             @default(0)
+  renchan             Boolean         @default(false)
+  ryukyoku            Boolean         @default(false)
+  players             RoundPlayers[]
+
+  
+  fk_session_id       GameSession     @relation(fields: [session_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  @@id([session_id, idx])             // session id + idx as PK
+  @@map("round_records")
+}
+
+model RoundPlayers {
+  session_id          String          @db.Uuid // fk
+  idx                 Int             // fk
+  seat                Int             // fk
+
+  win                 Boolean         @default(false)
+  tsumo               Boolean         @default(false)
+  lose                Boolean         @default(false)
+  fuulu               Boolean         @default(false)
+  reach               Boolean         @default(false)
+  startingscore       Int             
+  deltascore          Int
+  endingscore         Int
+
+  
+  fk_round_record    RoundRecords     @relation(fields: [session_id, idx], references: [session_id, idx], onDelete: Cascade, onUpdate: Cascade)
+  fk_session_player  SessionPlayers   @relation(fields: [session_id, seat], references: [session_id, seat], onDelete: Cascade, onUpdate: Cascade)
+  @@id([session_id, idx, seat])       // session id + idx as PK
+  @@map("round_player_status")
+}

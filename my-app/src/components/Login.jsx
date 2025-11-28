@@ -1,23 +1,40 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     username: '',
     password: ''
   });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    if (errors.server) {
+      setErrors({});
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setErrors({});
 
-    console.log('Login attempted with:', formData);
+    const result = await login(formData);
+    
+    if (result.success) {
+      navigate('/');
+    } else {
+      setErrors({ server: result.error || 'Login failed.' });
+    }
+    setLoading(false);
   };
 
   return (
@@ -38,6 +55,10 @@ const Login = () => {
             <h2 className="text-4xl font-bold text-white mb-2">Sign in</h2>
           </div>
 
+          <div className={`${(errors.server ? 'visible' : 'invisible')} bg-red-500/20 border border-red-400/50 text-white px-4 py-3 rounded-xl text-sm`}>
+            {errors.server}
+          </div>
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <label htmlFor="username" className="text-white/90 text-sm font-medium">
@@ -52,6 +73,7 @@ const Login = () => {
                 className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-white/60 focus:bg-white/20 transition-all duration-300"
                 placeholder="Enter your email or username"
                 required
+                disabled={loading}
               />
             </div>
 
@@ -68,14 +90,16 @@ const Login = () => {
                 className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-white/60 focus:bg-white/20 transition-all duration-300"
                 placeholder="Enter your password"
                 required
+                disabled={loading}
               />
             </div>
 
             <button
               type="submit"
-              className="w-full bg-white text-purple-600 font-semibold py-3 px-4 rounded-xl hover:bg-white/90 transform hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="w-full bg-white text-purple-600 font-semibold py-3 px-4 rounded-xl hover:bg-white/90 transform hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:transform-none"
+              disabled={loading}
             >
-              Log In
+              {loading ? 'Signing in...' : 'Log In'}
             </button>
           </form>
 

@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
 const Navbar = ({ onHeightChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navRef = useRef(null);
+  const { user, logout } = useAuth();
   
   const navLinks = [
     { path: '/', name: 'Home'},
@@ -12,7 +14,7 @@ const Navbar = ({ onHeightChange }) => {
     { path: '/matchhistory', name: 'Recent Games'},
     { path: '/search', name: 'search'}
   ];
-  
+
   // current page
   const isActive = (path) => {
     return location.pathname === path;
@@ -75,16 +77,31 @@ const Navbar = ({ onHeightChange }) => {
           </div>
           
           {/* login + Sign Up */}
-          <div className="hidden md:flex items-center space-x-3">
-            <Link to="/Login" className="px-4 py-2 text-gray-700 hover:text-gray-900 text-lg transition-colors duration-300 whitespace-nowrap">
-              Log in
-            </Link>
-            <Link to="/Register" className="px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg rounded-lg hover:from-blue-600 hover:to-purple-500 transition-all duration-300 shadow-lg whitespace-nowrap">
-              Sign Up
-            </Link>
-          </div>
+          {user?.username ? (
+            <div className="hidden md:flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center" title={user.username}>
+                <span className="text-white font-bold text-xl">{user.username[0]}</span>
+              </div>
+              <button
+                onClick={logout}
+                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="hidden md:flex items-center space-x-3">
+              <Link to="/Login" className="px-4 py-2 text-gray-700 hover:text-gray-900 text-lg transition-colors duration-300 whitespace-nowrap">
+                Log in
+              </Link>
+              <Link to="/Register" className="px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg rounded-lg hover:from-blue-600 hover:to-purple-500 transition-all duration-300 shadow-lg whitespace-nowrap">
+                Sign Up
+              </Link>
+            </div>
+          )}
+
           
-          {/* 移动端菜单按钮 */}
+          {/* mobile button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -99,7 +116,7 @@ const Navbar = ({ onHeightChange }) => {
           </div>
         </div>
         
-        {/* 移动端导航菜单 */}
+        {/* mobile */}
         {isOpen && (
           <div className="md:hidden border-t border-gray-200">
             <div className="py-4 space-y-2">
@@ -107,7 +124,7 @@ const Navbar = ({ onHeightChange }) => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  onClick={() => setIsOpen(false)} // 点击后关闭菜单
+                  onClick={() => setIsOpen(false)}
                   className={`
                     block w-full text-left px-4 py-3 rounded-lg text-lg
                     ${isActive(link.path) 
@@ -122,14 +139,28 @@ const Navbar = ({ onHeightChange }) => {
                 </Link>
               ))}
               
-              <div className="pt-4 border-t border-gray-200 space-y-2">
-                <Link to="/Login" className="block w-full px-4 py-3 text-gray-700 hover:bg-gray-100 text-lg rounded-lg text-left">
-                  Log in
-                </Link>
-                <Link to="/Register" className="block w-full px-4 py-3 text-gray-700 hover:bg-gray-100 text-lg rounded-lg text-left">
-                  Sign Up
-                </Link>
-              </div>
+              {user?.username ? (
+                <div className="pt-4 border-t border-gray-200 space-y-2">
+                  <div className="block w-full py-2 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-xl">{user.username}</span>
+                  </div>
+                  <button
+                    onClick={logout}
+                    className="block w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <div className="pt-4 border-t border-gray-200 space-y-2">
+                  <Link to="/Login" className="block w-full px-4 py-3 text-gray-700 hover:bg-gray-100 text-lg rounded-lg text-left">
+                    Log in
+                  </Link>
+                  <Link to="/Register" className="block w-full px-4 py-3 text-gray-700 hover:bg-gray-100 text-lg rounded-lg text-left">
+                    Sign Up
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         )}
