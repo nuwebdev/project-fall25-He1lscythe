@@ -1,11 +1,11 @@
-// server.js - 主服务器文件
-const express = require('express');
-const cors = require('cors');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { PrismaClient } = require('@prisma/client');
-require('dotenv').config();
+import express, { json } from 'express';
+import cors from 'cors';
+import { hash, compare } from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { PrismaClient } from '@prisma/client';
+import 'dotenv/config';
 
+const { sign, verify } = jwt;
 
 const app = express();
 const prisma = new PrismaClient();
@@ -15,11 +15,11 @@ app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true
 }));
-app.use(express.json());
+app.use(json());
 
 // generate jwt token
 const generateToken = (userId) => {
-  return jwt.sign(
+  return sign(
     { userId },
     process.env.JWT_SECRET || 'your-secret-key',
     { expiresIn: '1y' }
@@ -36,7 +36,7 @@ const authMiddleware = async (req, res, next) => {
       throw new Error();
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+    const decoded = verify(token, process.env.JWT_SECRET || 'your-secret-key');
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId }
     });
@@ -90,7 +90,7 @@ app.post('/api/auth/register', async (req, res) => {
     }
 
     // encrypt
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await hash(password, 10);
 
     // create user, put into sql
     const user = await prisma.user.create({
@@ -140,7 +140,7 @@ app.post('/api/auth/login', async (req, res) => {
       return res.status(401).json({ message: 'Username/email not exist.' });
     }
 
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    const isPasswordMatch = await compare(password, user.password);
 
     if (!isPasswordMatch) {
       return res.status(401).json({ message: 'Password or usename incorrect' });

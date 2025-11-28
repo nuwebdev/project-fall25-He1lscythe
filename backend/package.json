@@ -2,6 +2,7 @@
   "name": "mahjong-backend",
   "version": "1.0.0",
   "description": "MahJong game backend with PostgreSQL",
+  "type": "module",
   "main": "server.js",
   "prisma": {
     "seed": "node prisma/seed.js"
