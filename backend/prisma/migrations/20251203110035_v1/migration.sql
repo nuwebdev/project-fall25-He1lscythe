@@ -5,6 +5,8 @@ CREATE TABLE "users" (
     "email" VARCHAR(50) NOT NULL,
     "password" VARCHAR(255) NOT NULL,
     "open" BOOLEAN NOT NULL DEFAULT true,
+    "role" TEXT NOT NULL DEFAULT 'user',
+    "status" TEXT NOT NULL DEFAULT 'active',
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -20,6 +22,7 @@ CREATE TABLE "game_types" (
     "point_second" INTEGER NOT NULL,
     "point_third" INTEGER NOT NULL,
     "point_fourth" INTEGER NOT NULL,
+    "kiriage" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "game_types_pkey" PRIMARY KEY ("id")
 );
@@ -70,8 +73,10 @@ CREATE TABLE "round_player_status" (
     "lose" BOOLEAN NOT NULL DEFAULT false,
     "fuulu" BOOLEAN NOT NULL DEFAULT false,
     "reach" BOOLEAN NOT NULL DEFAULT false,
+    "tenpai" BOOLEAN NOT NULL DEFAULT false,
     "startingscore" INTEGER NOT NULL,
     "deltascore" INTEGER NOT NULL,
+    "endingscore" INTEGER NOT NULL,
 
     CONSTRAINT "round_player_status_pkey" PRIMARY KEY ("session_id","idx","seat")
 );

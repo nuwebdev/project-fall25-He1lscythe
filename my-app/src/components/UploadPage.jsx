@@ -1,19 +1,25 @@
-import { useEffect, useState, useMemo, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState, useMemo, useCallback, } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { useAuth } from '../contexts/AuthContext.jsx';
 import ApiService from '../services/api.js';
 
-const DateTimeInput = ({ label }) => {
-  const [dateTime, setDateTime] = useState(new Date());
+const Toast = ({ message }) => {
+  return (
+    <div className="inline-block bg-blue-600/20 border border-red-400/50 text-white p-3 mt-4 rounded-lg text-lg">
+      {message}
+    </div>
+  );
+}
 
+const DateTimeInput = ({ label, value, onChange }) => {
   return (
     <div className="flex flex-col mx-auto mb-4 mr-10">
       {label && <label className="font-semibold mb-3">{label}</label>}
         <DatePicker
-          selected={dateTime}
-          onChange={(date) => setDateTime(date)}
+          selected={value}
+          onChange={onChange}
           showTimeSelect
           timeFormat="HH:mm"
           timeIntervals={10}
@@ -36,6 +42,59 @@ const baseScoreCalculate = ({ fan, fu, roundup = true }) => {
   return Math.min(2000, Math.pow(2, fan + 2) * fu);
 };
 
+const saveGameDataToFile = (gameData) => {
+  const json = JSON.stringify(gameData, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  
+  const a = document.createElement('a');
+  a.href = url;
+  const dateStr = new Date(gameData.game_date)
+    .toISOString()
+    .slice(0, 16)
+    .replace('T', '_')
+    .replace(':', '-');
+  a.download = `gamerecord_${dateStr}.json`;
+  
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
+const ImportButton = ({ onImport }) => {
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const data = JSON.parse(event.target.result);
+        onImport(data);
+      } catch (error) {
+        console.error('Invalid JSON file:', error);
+        alert('Invalid JSON file');
+      }
+    };
+    reader.readAsText(file);
+    
+    e.target.value = '';
+  };
+
+  return (
+    <label className="cursor-pointer bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg text-white px-4 py-2">
+      Import
+      <input
+        type="file"
+        accept=".json"
+        onChange={handleFileChange}
+        className="hidden"
+      />
+    </label>
+  );
+};
+
 // <OneKyoku />
 const OneKyoku = ({
   index = 1,
@@ -51,7 +110,8 @@ const OneKyoku = ({
   onToggleReachCount,
   kyotaku,
   previousScores = [25000, 25000, 25000, 25000],
-  onScoreChange
+  onScoreChange,
+  onPlayerStateChange
 }) => {
   const [playersReach, setReach] = useState([false, false, false, false]);
   const [playersFuulu, setFuulu] = useState([false, false, false, false]);
@@ -171,17 +231,9 @@ const OneKyoku = ({
 
     return sc;
   }, [
-    playersReach,
-    playersTenpai,
-    playersWin,
-    playersLose,
-    playersTsumo,
-    playersFan,
-    playersFu,
-    kyokuIdx,
-    kyokuHonba,
-    ryukyoku,
-    kyotaku,
+    playersReach,   playersTenpai,   playersWin,   playersLose,
+    playersTsumo,   playersFan,      playersFu,
+    kyokuIdx,       kyokuHonba,      ryukyoku,     kyotaku,
     kiriage
   ]);
 
@@ -204,6 +256,25 @@ const OneKyoku = ({
       return newLose;
     });
   };
+
+  useEffect(() => {
+    onPlayerStateChange(id, {
+      playersReach,
+      playersFuulu,
+      playersTenpai,
+      playersWin,
+      playersLose,
+      playersTsumo,
+      playersFan,
+      playersFu
+    });
+  }, [
+    id, 
+    playersReach, playersFuulu, playersTenpai, 
+    playersWin, playersLose, playersTsumo, 
+    playersFan, playersFu, 
+    onPlayerStateChange
+  ]);
 
   const handleWinClick = (clickedIndex, checked) => {
     setWin(prev => {
@@ -379,9 +450,13 @@ const OneKyoku = ({
 };
 
 
-const WholeGame = ({ playersName, rules }) => {
+const WholeGame = ({ playersName, rules, gameDateTime }) => {
+  const navigate = useNavigate();
   const [kyokuList, setKyokuList] = useState([]);
   const [scoreChangesMap, setScoreChangesMap] = useState({});
+  const [playerStatesMap, setPlayerStatesMap] = useState({});
+  const [gameData, setGameData] = useState({});
+  const [jsFileImported, setImported] = useState(false);
   const initialScores = rules.id === 2
     ? [30000, 30000, 30000, 30000]
     : [25000, 25000, 25000, 25000];
@@ -389,6 +464,7 @@ const WholeGame = ({ playersName, rules }) => {
 
   const { user } = useAuth();
   const [errors, setErrors] = useState({});
+  const [succeed, setSucceed] = useState({});
   const [loading, setLoading] = useState(false);
   
 
@@ -405,7 +481,7 @@ const WholeGame = ({ playersName, rules }) => {
       } = arr[index - 1];
       const [prevKyokuIdx, prevKyokuHonba, prevKyotaku] = acc[index - 1];
       const newKyokuIdx = prevRenChan ? prevKyokuIdx : prevKyokuIdx + 1;
-      const newKyokuHonba = prevRenChan ? prevKyokuHonba + 1 : 0;
+      const newKyokuHonba = (prevRenChan || prevRyukyoku) ? prevKyokuHonba + 1 : 0;
       const newKyotaku = prevRyukyoku ? prevKyotaku + prevReachCount  : 0;
 
       return [...acc, [newKyokuIdx, newKyokuHonba, newKyotaku]];
@@ -559,25 +635,120 @@ const WholeGame = ({ playersName, rules }) => {
   } = getFinalScoresAndRanking();
   // console.log(finalScores);
   // console.log(finalRankings);
+
+  const handlePlayerStateChange = useCallback((kyokuId, states) => {
+    setPlayerStatesMap(prev => ({
+      ...prev,
+      [kyokuId]: states
+    }));
+  }, []);
   
-  const handleSubmitWholeGame = () => {
-    if (initialScores.reduce((a, b) => a + b, 0) 
-      !== finalScores.reduce((a, b) => a + b, 0)) {
-        return setErrors({ submiterror: 'Check if the form is completed.' });
-    } 
-    
-    if (playersName.filter(name => name === user?.username).length !== 1) {
-      return setErrors({ submiterror: 'You should enter your name to one and only one of the seat.' });
+  const handleSubmitWholeGame = async (submit = true) => {
+    if (jsFileImported === false && Object.keys(gameData).length === 0) {
+      if (initialScores.reduce((a, b) => a + b, 0) 
+        !== finalScores.reduce((a, b) => a + b, 0)) {
+          return setErrors({ submiterror: 'Check if the form is completed.' });
+      } 
+      
+      if (playersName.filter(name => name === user?.username).length !== 1) {
+        return setErrors({ submiterror: 'You should enter your name to one and only one of the seat.' });
+      }
     }
 
     setErrors({});
+    setLoading(true);
 
+    try {
+      const roundRecords = kyokuList.map((kyoku, index) => {
+        const states = playerStatesMap[kyoku.id] || {};
+        const prevScores = index === 0 ? initialScores : getCumulativeScores(index - 1);
+        const changes = scoreChangesMap[kyoku.id] || [0, 0, 0, 0];
+        const currScores = index === kyokuList.length - 1 
+          ? finalScores 
+          : [0, 1, 2, 3].map(seat => (prevScores[seat] + changes[seat]));
+
+        return {
+          idx: index,
+          wind: Math.floor(kyoku.kyokuIdx / 4),
+          dealer: kyoku.kyokuIdx % 4,
+          honba: kyoku.kyokuHonba,
+          kyotaku: kyoku.kyotaku,
+          renchan: kyoku.renChan,
+          ryukyoku: kyoku.ryukyoku,
+          players: [0, 1, 2, 3].map(seat => ({
+            seat,
+            win: states.playersWin?.[seat] || false,
+            tsumo: states.playersTsumo?.[seat] || false,
+            lose: states.playersLose?.[seat] || false,
+            fuulu: states.playersFuulu?.[seat] || false,
+            reach: states.playersReach?.[seat] || false,
+            tenpai: states.playersTenpai?.[seat] || false,
+            fan: states.playersFan?.[seat] || 1,
+            fu: states.playersFu?.[seat] || 30,
+            startingscore: prevScores[seat],
+            deltascore: changes[seat] || 0,
+            endingscore: currScores[seat] || 0
+          }))
+        };
+      });
+      
+      // console.log(roundRecords);
+      // console.log(kyokuList);
+      if (jsFileImported === false && Object.keys(gameData).length === 0) {
+        setGameData({
+          is_detailed: true,
+          game_type: rules.id,
+          game_date: gameDateTime.toISOString(),
+          session_players: [0, 1, 2, 3].map((seat, idx) => ({
+            seat,
+            username: playersName[seat] === "" ? `Player${idx + 1}` : playersName[seat],
+            final_ranking: finalRankings[seat],
+            final_score: finalScores[seat],
+            final_point: finalPoints[seat]
+          })),
+          round_records: roundRecords
+        });
+      }
+
+      if (submit) {
+        console.log('Submitting:', gameData);
+        const result = await ApiService.uploadGameSession(gameData);
+        console.log('API result:', result);
+        if (result.success) {
+          setSucceed({submitsucceed: result.message});
+          console.log('Setting succeed state');
+          setTimeout(() => {
+            navigate('/');
+          }, 2000);
+        } else {
+          setErrors({server: result.error || 'Upload failed.'});
+        }
+      } else {
+        saveGameDataToFile(gameData);
+      }
+    } catch (error) {
+      console.error(error);
+      setErrors({ submiterror: error.message || 'Submit failed' });
+    } finally {
+      setLoading(false);
+    }
   };
-    
+
+  const handleImport = (data) => {
+    // console.log('Imported data:', data);
+    setGameData(data);
+    setImported(true);
+  };
+  // console.log(gameData);
+  // console.log(jsFileImported);
+
   return (
     <div>
       <div className='flex divide-x divide-black border border-black mt-10 ml-8 mr-8'>
-        <div className="w-1/5 flex items-center justify-center p-4">局</div>
+        <div className="w-1/5 flex items-center justify-center p-4 space-x-6">
+          <ImportButton onImport={handleImport} />
+          <div>局</div>
+        </div>
         {playersName.map((pName, idx) => (
           <div key={`player-${idx}`} className="w-1/5 flex flex-col items-stretch">
             <div className="h-2/3 flex justify-center items-center w-full border-b border-black py-2.5">
@@ -611,6 +782,7 @@ const WholeGame = ({ playersName, rules }) => {
           kyotaku={item.kyotaku}
           previousScores={prevScores}
           onScoreChange={handleScoreChange}
+          onPlayerStateChange={handlePlayerStateChange}
           />
         );
       })}
@@ -639,12 +811,22 @@ const WholeGame = ({ playersName, rules }) => {
               );
             })}
           </div>
-          <div className={`${(errors.submiterror ? 'visible' : 'invisible')} inline-block bg-red-500/20 border border-red-400/50 text-white p-1 mt-4 rounded-lg text-md`}>
-            {errors.submiterror}
-          </div>
-          <button className="block mx-auto m-4" onClick={handleSubmitWholeGame} >Submit</button>
+
         </>
       )}
+      {(kyokuList.length > 0 || jsFileImported === true) && (
+        <>
+          <div className={`${(errors.submiterror ? 'visible' : 'invisible')} inline-block bg-red-500/20 border border-red-400/50 text-white p-1 my-4 rounded-lg text-md`}>
+            {errors.submiterror}
+          </div>
+          <div className="space-x-8">
+            <button className="" onClick={() => handleSubmitWholeGame(false)} >Save</button>
+            <button className="" onClick={() => handleSubmitWholeGame(true)} >Submit</button>
+          </div>
+          {succeed.submitsucceed && <Toast message={succeed.submitsucceed} />}
+        </>
+      )}
+      
       
     </div>
   );
@@ -657,6 +839,7 @@ const UploadPage = () => {
   const [rules, setRules] = useState(1);
   const [ruleList, setRuleList] = useState([]);
   const [ruleDetail, setRuleDetail] = useState({});
+  const [gameDateTime, setGameDateTime] = useState(new Date());
   // console.log(startingScore);
 
   useEffect(() => {
@@ -691,7 +874,11 @@ const UploadPage = () => {
       
       <div className="flex flex-wrap">
         {/* Date & time */}
-        <DateTimeInput label="Date and Time" />
+        <DateTimeInput
+          label="Date and Time" 
+          value={gameDateTime} 
+          onChange={setGameDateTime}
+        />
 
         {/* Detailed game settings */}
         <div className="mx-auto flex flex-wrap justify-center">
@@ -705,12 +892,16 @@ const UploadPage = () => {
               onChange={(e) => setRules(e.target.value)}
               className="border border-gray-400 rounded-lg px-3 py-2"
             >
-              {ruleList.map((item) => (
+              {ruleList?.length > 0 
+              ? ruleList.map((item) => (
                 <option key={`rules-${item.id}`} value={item.id}>{item.type_name}</option>
-              ))}
+              )) 
+              : <option value={1} className="invisible">Mリーグルール</option>}
             </select>
           </div>
-          {rules > 0 && <div className="h-auto my-auto">{ruleDetail.description}</div>}
+          <div className="h-auto my-auto">
+            {(ruleDetail?.description || <span className="h-auto">25000持ち30000返し 10-30</span>)}
+          </div>
         {/*  */}
         </div>
       </div>
@@ -730,7 +921,7 @@ const UploadPage = () => {
       </div>
 
       {/* KyokuList */}
-      <WholeGame playersName={playersName} rules={ruleDetail} />
+      <WholeGame playersName={playersName} rules={ruleDetail} gameDateTime={gameDateTime} />
     </div>
   );
 };

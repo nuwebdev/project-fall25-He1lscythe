@@ -29,9 +29,7 @@ const Login = () => {
 
     const result = await login(formData);
     
-    if (result.success) {
-      navigate('/');
-    } else {
+    if (!result.success) {
       setErrors({ server: result.error || 'Login failed.' });
     }
     setLoading(false);

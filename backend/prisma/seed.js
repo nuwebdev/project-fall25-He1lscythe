@@ -44,35 +44,51 @@ async function seedGameTypes() {
   })
   
   const hashedPassword = [];
-  for (let i = 0; i < 4; i++) {
-    hashedPassword[i] = await bcrypt.hash(`Test000${i + 1}`, 10);
+  for (let i = 0; i < 5; i++) {
+    hashedPassword[i] = await bcrypt.hash(`Test000${i}`, 10);
   }
 
   await prisma.user.createMany({
     data: [
+      {
+        username: 'Admin0', 
+        email: 'Admin0@test.xyz', 
+        password: hashedPassword[0], 
+        open: false,
+        role: 'admin',
+        status: 'active' 
+      },
       { 
         username: 'Player1', 
         email: 'player1@test.xyz', 
         password: hashedPassword[0], 
-        open: false 
+        open: false,
+        role: 'user',
+        status: 'active' 
       },
       { 
         username: 'Player2', 
         email: 'player2@test.xyz', 
         password: hashedPassword[1], 
-        open: false 
+        open: false,
+        role: 'user',
+        status: 'active'  
       },
       { 
         username: 'Player3', 
         email: 'player3@test.xyz', 
         password: hashedPassword[2], 
-        open: false 
+        open: false,
+        role: 'user',
+        status: 'active'  
       },
       { 
         username: 'Player4', 
         email: 'player4@test.xyz', 
         password: hashedPassword[3], 
-        open: false 
+        open: false,
+        role: 'user',
+        status: 'active'  
       },
     ],
     skipDuplicates: true,

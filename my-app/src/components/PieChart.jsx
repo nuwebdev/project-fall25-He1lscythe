@@ -1,35 +1,35 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
-import rec from './Gamedata';
 
-const RankingPieChart = () => {
+const RankingPieChart = ({ gsData, username }) => {
   const rankingData = useMemo(() => {
     const rankingCount = { 1: 0, 2: 0, 3: 0, 4: 0 };
-    
-    rec.forEach(item => {
-      const yuuRecord = item.results.find(player => player.name === 'YuuNecro');
-      if (yuuRecord) {
-        rankingCount[yuuRecord.ranking]++;
-      }
+
+    gsData.forEach(item => {
+      rankingCount[item.session_players.find(p => p.fk_user_id.username === username).final_ranking]++;
     });
     
     const data = [
-      { name: '1st', value: rankingCount[1], percentage: (rankingCount[1] / rec.length * 100).toFixed(1) },
-      { name: '2nd', value: rankingCount[2], percentage: (rankingCount[2] / rec.length * 100).toFixed(1) },
-      { name: '3rd', value: rankingCount[3], percentage: (rankingCount[3] / rec.length * 100).toFixed(1) },
-      { name: '4th', value: rankingCount[4], percentage: (rankingCount[4] / rec.length * 100).toFixed(1) },
+      { name: '1st', value: rankingCount[1], percentage: (rankingCount[1] / gsData.length * 100).toFixed(2) },
+      { name: '2nd', value: rankingCount[2], percentage: (rankingCount[2] / gsData.length * 100).toFixed(2) },
+      { name: '3rd', value: rankingCount[3], percentage: (rankingCount[3] / gsData.length * 100).toFixed(2) },
+      { name: '4th', value: rankingCount[4], percentage: (rankingCount[4] / gsData.length * 100).toFixed(2) },
     ];
+    // console.log(rankingCount);
+    
+
     
     return data;
-  }, []);
+  }, [gsData]);
+  // console.log(gsData);
   
   const COLORS = {
-    '1st': '#FFD700',
-    '2nd': '#C0C0C0',
-    '3rd': '#CD7F32',
-    '4th': '#6B7280',
+      '1st': '#28a745',
+      '2nd': '#17a2b8', 
+      '3rd': '#6c757d',
+      '4th': '#dc3545'
   };
-
+  
   const renderCombinedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, percentage }) => {
     const RADIAN = Math.PI / 180;
     
@@ -44,7 +44,7 @@ const RankingPieChart = () => {
     const y2 = cy + outerRadius2 * Math.sin(-midAngle * RADIAN);
     
     return (
-      <g>
+      <>
         {/* % */}
         <text 
           x={x1} 
@@ -68,19 +68,17 @@ const RankingPieChart = () => {
         >
           {name}
         </text>
-      </g>
+      </>
     );
   };
   
-  const totalGames = rec.length;
-  
   return (
     <div className="w-full mx-auto p-6 mb-4 border-2">
-      <h2 className="text-2xl font-bold text-gray-800 mb-1 text-center">
+      <h2 className="text-4xl font-bold text-gray-800 mb-8 text-center">
         Rankings
       </h2>
-      <p className="text-xs text-gray-800 mb-6 text-center">
-        (based on recent {totalGames} games)</p>
+      {/* <p className="invisible text-xs text-gray-800 mb-6 text-center">
+        (based on recent {gsData.length} games)</p> */}
       
       {/* piechart */}
       <div className="flex justify-center items-center">

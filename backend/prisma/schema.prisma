@@ -16,6 +16,8 @@ model User {
   email             String             @unique @db.VarChar(50)
   password          String             @db.VarChar(255)
   open              Boolean            @default(true)
+  role              String             @default("user")
+  status            String             @default("active") // "active" | "banned"
   session_players   SessionPlayers[]
   
   @@map("users")
@@ -93,6 +95,7 @@ model RoundPlayers {
   lose                Boolean         @default(false)
   fuulu               Boolean         @default(false)
   reach               Boolean         @default(false)
+  tenpai              Boolean         @default(false)
   startingscore       Int             
   deltascore          Int
   endingscore         Int

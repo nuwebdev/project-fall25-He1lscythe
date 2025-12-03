@@ -69,6 +69,11 @@ class ApiService {
     });
   }
 
+  static logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  }
+
   // ============ do not need Auth ============
 
   static async getGameTypeList() {
@@ -83,9 +88,57 @@ class ApiService {
     });
   }
 
-  static logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+  static async uploadGameSession(gameData) {
+    return this.request('/upload/gamerecord', {
+      method: 'POST',
+      body: JSON.stringify(gameData)
+    });
+  }
+
+  //const { userId, page = '1', limit = '100', from, to } = req.query;
+  //GET /api/stats/games?userId=xxx&page=1&limit=100&from=2023-01-01&to=2025-11-30
+  static async getGameSession(f = {}) {
+    const s = new URLSearchParams(
+      Object.fromEntries(
+        Object.entries(f).filter(([_, v]) => v !== undefined && v !== null && v !== '')
+      )
+    );
+    return this.request(`/player/gamesession${s ? `?${s}` : ''}`, {
+      method: 'GET',
+    });
+  }
+
+  static async getRoundPlayers(f = {}) {
+    const s = new URLSearchParams(
+      Object.fromEntries(
+        Object.entries(f).filter(([_, v]) => v !== undefined && v !== null && v !== '')
+      )
+    );
+    
+    return this.request(`/player/roundplayers${s ? `?${s}` : ''}`, {
+      methos: 'GET',
+    });
+  }
+
+  // app.get('api/gamesession/detail'
+  static async getGameSessionDetail(f = {}) {
+    const s = new URLSearchParams(f);
+    return this.request(`/gamesession/detail${s ? `?${s}` : ''}`, {
+      method: 'GET',
+    });
+  }
+
+  // app.get('/api/player/search',
+  static async searchUser(q) {
+    return this.request(`/player/search?q=${encodeURIComponent(q)}`, {
+      method: 'GET',
+    });
+  }
+
+  static async getUserById(id) {
+    return this.request(`/user/${id}`, {
+      method: 'GET',
+    });
   }
 
   static isAuthenticated() {
@@ -100,6 +153,33 @@ class ApiService {
   static saveUserData(token, user) {
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  // ============ Admin ============
+
+  static async adminGetUsers() {
+    return this.request('/admin/users', {
+      method: 'GET',
+    });
+  }
+
+  static async adminUpdateUserStatus(userId, status) {
+    return this.request(`/admin/user/${userId}/status`, {
+      method: 'PUT',
+      body: JSON.stringify({ status })
+    });
+  }
+
+  static async adminGetUserGames(userId) {
+    return this.request(`/admin/user/${userId}/games`, {
+      method: 'GET',
+    });
+  }
+
+  static async adminDeleteGameSession(uuid) {
+    return this.request(`/admin/gamesession/${uuid}`, {
+      method: 'DELETE',
+    });
   }
 }
 

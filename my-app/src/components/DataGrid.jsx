@@ -1,31 +1,64 @@
-import React from 'react';
+const DataGrid = ({ rrData, gsData }) => {
+  const gnum = gsData.length;
+  const rnum = rrData.length;
+  const stats = {
+    win: 0,
+    lose: 0,
+    tsumo: 0,
+    fuulu: 0,
+    tenpai: 0,
+    reach: 0,
+    ryukyoku: 0,
+    winScore: 0,
+    loseScore: 0,
+    highestScore: -Infinity,
+    lowestScore: Infinity,
+    ranking: 0
+  };
 
-const DataGrid = () => {
+  const toPercent = (num) => (num * 100).toFixed(2) + '%';
+
+  rrData.forEach(item => {
+    if (item.win) { stats.win++; stats.winScore += item.deltascore; }
+    if (item.lose) { stats.lose++; stats.loseScore -= item.deltascore; }
+    if (item.fuulu) stats.fuulu++;
+    if (item.reach) stats.reach++;
+    if (item.tsumo) stats.tsumo++;
+    if (item.tenpai) stats.tenpai++;
+    if (item.fk_round_record.ryukyoku) stats.ryukyoku++;
+  });
+  // console.log(stats);
+
+  gsData.forEach(item => {
+    const p = item.session_players.find(p => p.fk_user_id.username);
+    stats.ranking += p.final_ranking;
+    if (p.final_score > stats.highestScore) stats.highestScore = p.final_score;
+    if (p.final_score < stats.lowestScore) stats.lowestScore = p.final_score;
+  });
+  // console.log(gsData);
+
   const gridData = [
-    { label: "Total Games", value: "50" },
-    { label: "Win Rate", value: "30%" },
-    { label: "Best Score", value: "60,000" },
-    { label: "Average Score", value: "35,420" },
-    { label: "Worst Score", value: "5,000" },
-    { label: "Score Range", value: "55,000" },
+    { label: "Total games", value: gnum },
+    { label: "Highest score", value: stats.highestScore.toLocaleString() },
+    { label: "Lowest score", value: stats.lowestScore.toLocaleString() },
+    { label: "Win rate", value: toPercent(stats.win / rnum) },
+    { label: "Lose rate", value: toPercent(stats.lose / rnum) },
+    { label: "Tsumo rate", value: toPercent( stats.tsumo / stats.win ) },
     
-    { label: "call rate", value: "34.59%" },
-    { label: "Tsumo rate", value: "36.12%" },
-    { label: "Draw tenpai rate", value: "46.67" },
-    { label: "Deal-in rate", value: "13.53%" },
-    { label: "Top 2 Rate", value: "58%" },
-    { label: "fuulu rate", value: "34.01%" },
+    { label: "Draw tenpai rate", value: toPercent(stats.tenpai / stats.ryukyoku) },
+    { label: "Exhaustive draw rate", value: toPercent(stats.ryukyoku / rnum) },
+    { label: "Fuulu rate", value: toPercent(stats.fuulu / rnum) },
+    { label: "Reach rate", value: toPercent(stats.reach / rnum) },
+    { label: "Average win rate", value: toPercent(stats.win / rnum) },
     
-    { label: "Current Streak", value: "W2" },
-    { label: "Best Streak", value: "W5" },
-    { label: "Avg deal-in score", value: 5640 },
-    { label: "Last 10 Games", value: "6-4" },
-    { label: "Riichi rate", value: "20.09%" },
-    { label: "Consistency", value: "78%" },
+    { label: "Average lose rate", value: toPercent(stats.lose / rnum) },
+    { label: "Average rank", value: (stats.ranking / gnum).toFixed(2) },
+    { label: "Average win score", value: (stats.winScore / stats.win).toFixed(0) },
+    { label: "Average lose score", value: (stats.loseScore / stats.lose).toFixed(0) },
   ];
   
   return (
-    <div className="w-full mx-auto p-2">
+    <div className="w-full mx-auto py-2">
       <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">
         Statistics
       </h2>

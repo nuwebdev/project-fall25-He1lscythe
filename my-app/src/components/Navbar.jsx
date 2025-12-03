@@ -9,15 +9,23 @@ const Navbar = ({ onHeightChange }) => {
   const { user, logout } = useAuth();
   
   const navLinks = [
-    { path: '/', name: 'Home'},
-    { path: '/upload', name: 'Upload'},
-    { path: '/matchhistory', name: 'Recent Games'},
-    { path: '/search', name: 'search'}
+    ...(user?.role === 'admin' ? [
+      { path: '/admin/users', name: 'Admin' },
+      { path: '/matchhistory', name: 'All Games'}
+    ] : [
+      { path: '/', name: 'Home'},
+      { path: '/upload', name: 'Upload'},
+      { path: '/matchhistory', name: 'Recent Games'},
+      { path: '/search', name: 'Search'}
+    ])
   ];
+  
 
   // current page
   const isActive = (path) => {
-    return location.pathname === path;
+    return location.pathname === path 
+    || (location.pathname.startsWith('/game/') && path === '/matchhistory')
+    || (/^\/admin\/user\/[^/]+\/games$/.test(location.pathname) && path === '/matchhistory');
   };
   
   // get navbar height, return to app.jsx
@@ -94,7 +102,8 @@ const Navbar = ({ onHeightChange }) => {
               <Link to="/Login" className="px-4 py-2 text-gray-700 hover:text-gray-900 text-lg transition-colors duration-300 whitespace-nowrap">
                 Log in
               </Link>
-              <Link to="/Register" className="px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg rounded-lg hover:from-blue-600 hover:to-purple-500 transition-all duration-300 shadow-lg whitespace-nowrap">
+              <Link to="/Register" className="px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg rounded-lg 
+              hover:from-blue-600 hover:to-purple-500 transition-all duration-300 shadow-lg whitespace-nowrap">
                 Sign Up
               </Link>
             </div>
