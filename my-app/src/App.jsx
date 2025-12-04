@@ -16,6 +16,9 @@ import UserProfile from './components/UserPofile.jsx';
 import AdminRoute from './admin/AdminRoute.jsx';
 import AdminUsers from './admin/AdminUsers.jsx';
 
+import RelationalModel from './model/RelationalModel.jsx'
+import ERDiagram from './model/ERDiagram.jsx'
+
 
 const HomePage = () => {
   const { user } = useAuth();
@@ -39,7 +42,7 @@ const UserPage = () => {
 };
 
 
-const PublicRoute = ({ children }) => {
+const PublicLayout = () => {
   const { isAuthenticated, loading, user } = useAuth();
 
   if (loading) {
@@ -51,13 +54,10 @@ const PublicRoute = ({ children }) => {
   }
 
   if (isAuthenticated) {
-    if (user?.role === 'admin') {
-      return <Navigate to="/admin/users" replace />;
-    }
-    return <Navigate to="/" replace />;
+    return <Navigate to={user?.role === 'admin' ? '/admin/users' : '/'} replace />;
   }
 
-  return children;
+  return <Outlet />;
 };
 
 // page with navbar
@@ -91,7 +91,6 @@ function App() {
               <Route path="/search" element={<SearchPage />} />
               <Route path="/game/:uuid" element={<GameRecordViewer />} />
 
-
               <Route path="/admin/users" element={
                 <AdminRoute>
                   <AdminUsers />
@@ -105,16 +104,12 @@ function App() {
             </Route>
 
             {/* without navbar */}
-            <Route path="/register" element={
-                <PublicRoute>
-                  <Register />
-                </PublicRoute>
-            } />
-            <Route path="/login" element={
-                <PublicRoute>
-                  <Login />
-                </PublicRoute>
-            } />
+            <Route element={<PublicLayout />}>
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/erdiagram" element={<ERDiagram />} />
+              <Route path="/relationalmodel" element={<RelationalModel />} />
+            </Route>
 
             <Route path="*" element={
                 <div className="min-h-screen flex items-center justify-center">

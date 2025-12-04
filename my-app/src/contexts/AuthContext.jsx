@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
           const { user: currentUser } = await ApiService.getCurrentUser();
           setUser(currentUser);
         } catch (error) {
-          console.error('API 调用失败:', error);
+          console.error('API call failed:', error);
           ApiService.logout();
         }
       } else {

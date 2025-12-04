@@ -101,11 +101,23 @@ const Login = () => {
             </button>
           </form>
 
+          <div className='flex justify-center gap-x-12'>
+            <Link to="/erdiagram"
+                className="text-white font-semibold hover:text-white/80 underline underline-offset-4 transition-colors duration-300"
+              >
+                ERDiagram
+              </Link>
+              <Link to="/relationalmodel"
+                className="text-white font-semibold hover:text-white/80 underline underline-offset-4 transition-colors duration-300"
+              >
+                RelationalModel
+              </Link>
+          </div>
+
           <div className="text-center">
             <p className="text-white/70">
               Don't have an account?{' '}
-              <Link
-                to="/register"
+              <Link to="/register"
                 className="text-white font-semibold hover:text-white/80 underline underline-offset-4 transition-colors duration-300"
               >
                 Register
