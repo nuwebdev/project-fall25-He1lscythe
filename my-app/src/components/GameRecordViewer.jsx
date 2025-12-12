@@ -113,7 +113,7 @@ const GameRecordViewer = () => {
       hour12: false
     });
   };
-  console.log(gameData);
+  // console.log(gameData);
 
   useEffect(() => {
     if (!uuid) {
@@ -166,6 +166,7 @@ const GameRecordViewer = () => {
 
   const playerNames = session_players.map(p => p.fk_user_id?.username || `Player${p.seat + 1}`);
   const winds = ["東", "南", "西", "北"];
+  // console.log(session_players);
 
   return (
     <div className="w-full max-w-[1800px] mx-auto bg-gradient-to-br from-purple-100 to-pink-100 pt-6 pb-10">

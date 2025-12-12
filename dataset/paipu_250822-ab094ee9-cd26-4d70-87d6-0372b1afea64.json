@@ -1,36 +1,36 @@
 {
   "id": "250822-ab094ee9-cd26-4d70-87d6-0372b1afea64",
   "is_detailed": true,
-  "game_type": 3,
+  "game_type": 2,
   "game_date": "2025-08-21T19:50:44+00:00",
   "session_players": [
     {
       "seat": 0,
       "username": "Player1",
       "final_ranking": 4,
-      "final_score": 14500,
-      "final_point": -25.5
+      "final_score": 19500,
+      "final_point": -40.5
     },
     {
       "seat": 1,
-      "username": "Player2",
+      "username": "Hellscythe",
       "final_ranking": 3,
-      "final_score": 15900,
-      "final_point": -14.1
+      "final_score": 20900,
+      "final_point": -19.1
     },
     {
       "seat": 2,
-      "username": "Player3",
+      "username": "Inui",
       "final_ranking": 1,
-      "final_score": 42600,
-      "final_point": 32.6
+      "final_score": 47600,
+      "final_point": 47.6
     },
     {
       "seat": 3,
-      "username": "YuuNecro",
+      "username": "Player4",
       "final_ranking": 2,
-      "final_score": 27000,
-      "final_point": 7.0
+      "final_score": 32000,
+      "final_point": 12.0
     }
   ],
   "round_records": [
@@ -53,9 +53,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 25000,
+          "startingscore": 30000,
           "deltascore": 0,
-          "endingscore": 25000
+          "endingscore": 30000
         },
         {
           "seat": 1,
@@ -67,9 +67,9 @@
           "tenpai": false,
           "fan": 3,
           "fu": 25,
-          "startingscore": 25000,
+          "startingscore": 30000,
           "deltascore": 3200,
-          "endingscore": 28200
+          "endingscore": 33200
         },
         {
           "seat": 2,
@@ -81,9 +81,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 25000,
+          "startingscore": 30000,
           "deltascore": -3200,
-          "endingscore": 21800
+          "endingscore": 26800
         },
         {
           "seat": 3,
@@ -95,9 +95,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 25000,
+          "startingscore": 30000,
           "deltascore": 0,
-          "endingscore": 25000
+          "endingscore": 30000
         }
       ]
     },
@@ -120,9 +120,9 @@
           "tenpai": false,
           "fan": 1,
           "fu": 30,
-          "startingscore": 25000,
+          "startingscore": 30000,
           "deltascore": 2000,
-          "endingscore": 27000
+          "endingscore": 32000
         },
         {
           "seat": 1,
@@ -134,9 +134,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 28200,
+          "startingscore": 33200,
           "deltascore": 0,
-          "endingscore": 28200
+          "endingscore": 33200
         },
         {
           "seat": 2,
@@ -148,9 +148,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 21800,
+          "startingscore": 26800,
           "deltascore": -2000,
-          "endingscore": 19800
+          "endingscore": 24800
         },
         {
           "seat": 3,
@@ -162,9 +162,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 25000,
+          "startingscore": 30000,
           "deltascore": 0,
-          "endingscore": 25000
+          "endingscore": 30000
         }
       ]
     },
@@ -187,9 +187,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 27000,
+          "startingscore": 32000,
           "deltascore": -1000,
-          "endingscore": 26000
+          "endingscore": 31000
         },
         {
           "seat": 1,
@@ -201,9 +201,9 @@
           "tenpai": false,
           "fan": 3,
           "fu": 30,
-          "startingscore": 28200,
+          "startingscore": 33200,
           "deltascore": 4000,
-          "endingscore": 32200
+          "endingscore": 37200
         },
         {
           "seat": 2,
@@ -215,9 +215,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 19800,
+          "startingscore": 24800,
           "deltascore": -2000,
-          "endingscore": 17800
+          "endingscore": 22800
         },
         {
           "seat": 3,
@@ -229,9 +229,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 25000,
+          "startingscore": 30000,
           "deltascore": -1000,
-          "endingscore": 24000
+          "endingscore": 29000
         }
       ]
     },
@@ -254,9 +254,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 26000,
+          "startingscore": 31000,
           "deltascore": -1000,
-          "endingscore": 25000
+          "endingscore": 30000
         },
         {
           "seat": 1,
@@ -268,9 +268,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 32200,
+          "startingscore": 37200,
           "deltascore": -1000,
-          "endingscore": 31200
+          "endingscore": 36200
         },
         {
           "seat": 2,
@@ -282,9 +282,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 17800,
+          "startingscore": 22800,
           "deltascore": -1000,
-          "endingscore": 16800
+          "endingscore": 21800
         },
         {
           "seat": 3,
@@ -296,9 +296,9 @@
           "tenpai": false,
           "fan": 2,
           "fu": 30,
-          "startingscore": 24000,
+          "startingscore": 29000,
           "deltascore": 3000,
-          "endingscore": 27000
+          "endingscore": 32000
         }
       ]
     },
@@ -321,9 +321,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 25000,
+          "startingscore": 30000,
           "deltascore": 0,
-          "endingscore": 25000
+          "endingscore": 30000
         },
         {
           "seat": 1,
@@ -335,9 +335,9 @@
           "tenpai": false,
           "fan": 1,
           "fu": 30,
-          "startingscore": 31200,
+          "startingscore": 36200,
           "deltascore": 1300,
-          "endingscore": 32500
+          "endingscore": 37500
         },
         {
           "seat": 2,
@@ -349,9 +349,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 16800,
+          "startingscore": 21800,
           "deltascore": 0,
-          "endingscore": 16800
+          "endingscore": 21800
         },
         {
           "seat": 3,
@@ -363,9 +363,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 27000,
+          "startingscore": 32000,
           "deltascore": -1300,
-          "endingscore": 25700
+          "endingscore": 30700
         }
       ]
     },
@@ -388,9 +388,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 25000,
+          "startingscore": 30000,
           "deltascore": -3000,
-          "endingscore": 22000
+          "endingscore": 27000
         },
         {
           "seat": 1,
@@ -402,9 +402,9 @@
           "tenpai": true,
           "fan": 0,
           "fu": 0,
-          "startingscore": 32500,
+          "startingscore": 37500,
           "deltascore": 0,
-          "endingscore": 32500
+          "endingscore": 37500
         },
         {
           "seat": 2,
@@ -416,9 +416,9 @@
           "tenpai": true,
           "fan": 0,
           "fu": 0,
-          "startingscore": 16800,
+          "startingscore": 21800,
           "deltascore": 1000,
-          "endingscore": 17800
+          "endingscore": 22800
         },
         {
           "seat": 3,
@@ -430,9 +430,9 @@
           "tenpai": true,
           "fan": 0,
           "fu": 0,
-          "startingscore": 25700,
+          "startingscore": 30700,
           "deltascore": 1000,
-          "endingscore": 26700
+          "endingscore": 31700
         }
       ]
     },
@@ -455,9 +455,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 22000,
+          "startingscore": 27000,
           "deltascore": -3100,
-          "endingscore": 18900
+          "endingscore": 23900
         },
         {
           "seat": 1,
@@ -469,9 +469,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 32500,
+          "startingscore": 37500,
           "deltascore": -6100,
-          "endingscore": 26400
+          "endingscore": 31400
         },
         {
           "seat": 2,
@@ -483,9 +483,9 @@
           "tenpai": false,
           "fan": 7,
           "fu": 30,
-          "startingscore": 17800,
+          "startingscore": 22800,
           "deltascore": 13300,
-          "endingscore": 31100
+          "endingscore": 36100
         },
         {
           "seat": 3,
@@ -497,9 +497,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 26700,
+          "startingscore": 31700,
           "deltascore": -3100,
-          "endingscore": 23600
+          "endingscore": 28600
         }
       ]
     },
@@ -522,9 +522,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 18900,
+          "startingscore": 23900,
           "deltascore": 0,
-          "endingscore": 18900
+          "endingscore": 23900
         },
         {
           "seat": 1,
@@ -536,9 +536,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 26400,
+          "startingscore": 31400,
           "deltascore": -3900,
-          "endingscore": 22500
+          "endingscore": 27500
         },
         {
           "seat": 2,
@@ -550,9 +550,9 @@
           "tenpai": false,
           "fan": 2,
           "fu": 40,
-          "startingscore": 31100,
+          "startingscore": 36100,
           "deltascore": 3900,
-          "endingscore": 35000
+          "endingscore": 40000
         },
         {
           "seat": 3,
@@ -564,9 +564,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 23600,
+          "startingscore": 28600,
           "deltascore": 0,
-          "endingscore": 23600
+          "endingscore": 28600
         }
       ]
     },
@@ -589,9 +589,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 18900,
+          "startingscore": 23900,
           "deltascore": 0,
-          "endingscore": 18900
+          "endingscore": 23900
         },
         {
           "seat": 1,
@@ -603,9 +603,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 22500,
+          "startingscore": 27500,
           "deltascore": -12300,
-          "endingscore": 10200
+          "endingscore": 15200
         },
         {
           "seat": 2,
@@ -617,9 +617,9 @@
           "tenpai": false,
           "fan": 5,
           "fu": 40,
-          "startingscore": 35000,
+          "startingscore": 40000,
           "deltascore": 12300,
-          "endingscore": 47300
+          "endingscore": 52300
         },
         {
           "seat": 3,
@@ -631,9 +631,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 23600,
+          "startingscore": 28600,
           "deltascore": 0,
-          "endingscore": 23600
+          "endingscore": 28600
         }
       ]
     },
@@ -656,9 +656,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 18900,
+          "startingscore": 23900,
           "deltascore": -1500,
-          "endingscore": 17400
+          "endingscore": 22400
         },
         {
           "seat": 1,
@@ -670,9 +670,9 @@
           "tenpai": true,
           "fan": 0,
           "fu": 0,
-          "startingscore": 10200,
+          "startingscore": 15200,
           "deltascore": 500,
-          "endingscore": 10700
+          "endingscore": 15700
         },
         {
           "seat": 2,
@@ -684,9 +684,9 @@
           "tenpai": true,
           "fan": 0,
           "fu": 0,
-          "startingscore": 47300,
+          "startingscore": 52300,
           "deltascore": 500,
-          "endingscore": 47800
+          "endingscore": 52800
         },
         {
           "seat": 3,
@@ -698,9 +698,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 23600,
+          "startingscore": 28600,
           "deltascore": -1500,
-          "endingscore": 22100
+          "endingscore": 27100
         }
       ]
     },
@@ -723,9 +723,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 17400,
+          "startingscore": 22400,
           "deltascore": -2900,
-          "endingscore": 14500
+          "endingscore": 19500
         },
         {
           "seat": 1,
@@ -737,9 +737,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 10700,
+          "startingscore": 15700,
           "deltascore": 0,
-          "endingscore": 10700
+          "endingscore": 15700
         },
         {
           "seat": 2,
@@ -751,9 +751,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 47800,
+          "startingscore": 52800,
           "deltascore": 0,
-          "endingscore": 47800
+          "endingscore": 52800
         },
         {
           "seat": 3,
@@ -765,9 +765,9 @@
           "tenpai": false,
           "fan": 2,
           "fu": 30,
-          "startingscore": 22100,
+          "startingscore": 27100,
           "deltascore": 4900,
-          "endingscore": 27000
+          "endingscore": 32000
         }
       ]
     },
@@ -790,9 +790,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 14500,
+          "startingscore": 19500,
           "deltascore": 0,
-          "endingscore": 14500
+          "endingscore": 19500
         },
         {
           "seat": 1,
@@ -804,9 +804,9 @@
           "tenpai": false,
           "fan": 3,
           "fu": 40,
-          "startingscore": 10700,
+          "startingscore": 15700,
           "deltascore": 5200,
-          "endingscore": 15900
+          "endingscore": 20900
         },
         {
           "seat": 2,
@@ -818,9 +818,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 47800,
+          "startingscore": 52800,
           "deltascore": -5200,
-          "endingscore": 42600
+          "endingscore": 47600
         },
         {
           "seat": 3,
@@ -832,9 +832,9 @@
           "tenpai": false,
           "fan": 0,
           "fu": 0,
-          "startingscore": 27000,
+          "startingscore": 32000,
           "deltascore": 0,
-          "endingscore": 27000
+          "endingscore": 32000
         }
       ]
     }

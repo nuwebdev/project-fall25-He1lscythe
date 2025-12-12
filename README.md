@@ -1,27 +1,37 @@
 "# project-fall25-He1lscythe" 
 
-video presentation for v0.2 [LiJiacong-v0.2-videopresentation.mkv](https://northeastern-my.sharepoint.com/:v:/g/personal/li_jiaco_northeastern_edu/ERiOkHP3tzdGuW_ouXjMTFoBVe5Er09nhb2npm2s6nIwfQ?e=Cx8Zcd)
+# Group members
+
+**Jiacong Li**                        Dawei Feng
 
 # Project Framework
 
 ```
 final/
-├── my-app/ (front-end: react + vite + tailwind) ---> front-end starts this directory
-│   │                                                 using  npm run dev
+├── dataset/       json files of gamesession records for presentation
+|                  imported using  npx prisma db seed
+├── my-app/ (front-end: react + vite + tailwind) ---> front-end starts from this 
+│   │                                       directory using  npm run dev
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── Login.jsx         
 │   │   │   ├── Register.jsx      
 │   │   │   ├── Navbar.jsx
-│   │   │   └── ...
+│   │   │   ├── UserMainPage.jsx
+│   │   │   └── other pages ...
+│   │   │
+│   │   │── model/
+│   │   │   ├── ERDiagram.jsx              # 
+│   │   │   └── RelationalModel.jsx
+│   │   │   
 │   │   ├── services/
-│   │   │   └── api.js               front-end api
-│   │   │   │   └── ApiService       send req, return res
+│   │   │   └── api.js                     # front-end api
+│   │   │   │   └── ApiService             # send req, return res
 │   │   ├── contexts/
-│   │   │   └── AuthContext.jsx      Authentication
-│   │   │                            & call ApiService
+│   │   │   └── AuthContext.jsx            # Authentication
+│   │   │                                  # & call ApiService
 │   │   ├── admin/                   
-│   │   │   ├── AdminUsers.jsx       Admin views
+│   │   │   ├── AdminUsers.jsx             # Admin views
 │   │   │   └── AdminRoute.jsx
 │   │   ├── App.jsx
 │   │   └── main.jsx
@@ -30,12 +40,40 @@ final/
 │   └── tailwind.config.js
 │
 └── backend/ (backend: node.js + postgresql + prisma) 
-                                  prisma: npx prisma studio --port 5556
-    ├── server.js                    
-    ├── package.json
+    |                     backend starts from this directory using: npm run dev 
+    |                                 prisma: npx prisma studio --port 5556
+    ├── src
+    │   ├── server.js                     # main entry
+    │   ├── prisma.js                     # to call prisma client
+    │   │
+    │   ├── middlewares/
+    │   │   ├── auth.js                   # authMiddleware
+    │   │   └── admin.js                  # adminMiddleware
+    │   │
+    │   ├── routes/                       # routers
+    │   │   │
+    │   │   ├── authRoutes.js             # /api/auth/*
+    │   │   ├── userRoutes.js             # /api/user/*
+    │   │   ├── gameTypeRoutes.js         # /api/gamestype/*
+    │   │   ├── gameSessionRoutes.js      # /api/gamesession/*
+    │   │   └── adminRoutes.js            # /api/admin/*
+    │   │
+    │   ├── controllers/                  # functionalities applied in this file
+    │   │   │
+    │   │   ├── authController.js         # login, register, get/update profile
+    │   │   ├── userController.js         # game session, round records()
+    │   │   ├── gameTypeController.js
+    │   │   ├── gameSessionController.js
+    │   │   └── adminController.js
+    │   │                                 
+    │   ├── utils/
+	│   │   └── token.js                  # generateToken, verifyToken
+    │   │
     ├── prisma 
     │   ├── schema.prisma             schema
     │   └── seed.js                   default data (including admin account)
+    |
+    ├── package.json
     └── .env                       
 ```
 
@@ -53,13 +91,19 @@ User views:
 
 - [x] statistics at homepage
 - [x] upload page
+  - [x] upload you game session records and update in the database
+
 - [x] match history page 
   - [x] filters with game type and ranking
   - [x] view game session details
   - [ ] editable/deletable after uploaded
 - [x] search page
-- [ ] user profile page (todo)
-  - [ ] update username/email/password
+  - [x] navigate to target user's page
+  - [x] compare points with target user
+
+- [x] user profile page (todo)
+  - [x] update username/email/open
+  - [ ] update password
 
 Admin views:
 
@@ -100,7 +144,7 @@ or via command line:
 psql -U postgres -c "CREATE DATABASE mahjong_db;"
 ```
 
-### backend setup
+### step 2: backend setup
 
 navigate to the backend directory 
 
@@ -120,12 +164,17 @@ JWT_SECRET=your_jwt_secret_key
 
 prisma
 
+**The prisma version is v6.19.0, it would not work with version later than v7.0!!** 
+
 ```bash
 npx prisma migrate dev
 npx prisma db seed
 ```
 
+**All initial data would be inserted with seed.js**
+
 run backend server
+
 ```
 npm run dev
 ```
@@ -153,7 +202,15 @@ npx prisma studio --port 5556
 
 you can view database at `http://localhost:5556`
 
+### For Dbeaver
+
+You can import schema and all data using [mahjong_db.sql](./backend/mahjong_db.sql) without frontend/backend.
+
 ## Usage Guide
+
+### E-R Diagram & Relational Model
+
+* Those can be seen from the link shown in login page.
 
 ### For User
 
@@ -162,8 +219,16 @@ you can view database at `http://localhost:5556`
 * User can check session details after uploaded
 * User can view statistics at homepage 
 * User can search other users'(players) stats page.
+* default user accounts: written in `seed.js`.
 
-### For Admin Account
+| username   | password  |
+| ---------- | --------- |
+| YuuNecro   | Password1 |
+| Eucliwood  | Password1 |
+| Hellscythe | Password1 |
+| Inui       | Password1 |
+
+### For Admin
 
 * can view all users' info
 * ban or reactive user's account
@@ -171,6 +236,10 @@ you can view database at `http://localhost:5556`
 * default admin account
   * Username: Admin0
   * Password: Test0000
+
+# Final report for CS5200
+
+Please refer to [report.pdf](./report/li_final_report.pdf) or [report.md](./report/li_final_report.md)
 
 
 # New Functionalities

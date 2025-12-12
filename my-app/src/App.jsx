@@ -11,7 +11,8 @@ import MatchHistory from './components/MatchHistory.jsx';
 import UploadPage from './components/UploadPage.jsx';
 import SearchPage from './components/SearchPage.jsx';
 import GameRecordViewer from './components/GameRecordViewer.jsx';
-import UserProfile from './components/UserPofile.jsx';
+import UserMainPage from './components/UserMainPage.jsx';
+import UserProfilePage from './components/UserProfile.jsx';
 
 import AdminRoute from './admin/AdminRoute.jsx';
 import AdminUsers from './admin/AdminUsers.jsx';
@@ -22,7 +23,7 @@ import ERDiagram from './model/ERDiagram.jsx'
 
 const HomePage = () => {
   const { user } = useAuth();
-  return <UserProfile userId={user.id} username={user.username} />;
+  return <UserMainPage userId={user.id} username={user.username} />;
 };
 
 const UserPage = () => {
@@ -38,7 +39,7 @@ const UserPage = () => {
     );
   }
 
-  return <UserProfile userId={parseInt(id)} username={username} />;
+  return <UserMainPage userId={parseInt(id)} username={username} />;
 };
 
 
@@ -90,6 +91,7 @@ function App() {
               <Route path="/matchhistory" element={<MatchHistory />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/game/:uuid" element={<GameRecordViewer />} />
+              <Route path="/profile" element={<UserProfilePage />} />
 
               <Route path="/admin/users" element={
                 <AdminRoute>

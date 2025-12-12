@@ -1,15 +1,15 @@
 {
   "id": "251128-30c7eb71-032b-4aed-b744-49802ab78383",
   "is_detailed": true,
-  "game_type": 1,
+  "game_type": 3,
   "game_date": "2025-11-28T10:12:07+00:00",
   "session_players": [
     {
       "seat": 0,
-      "username": "Player1",
+      "username": "YuuNecro",
       "final_ranking": 4,
       "final_score": 5500,
-      "final_point": -54.5
+      "final_point": -34.5
     },
     {
       "seat": 1,
@@ -23,14 +23,14 @@
       "username": "Player3",
       "final_ranking": 1,
       "final_score": 44200,
-      "final_point": 64.2
+      "final_point": 34.2
     },
     {
       "seat": 3,
-      "username": "YuuNecro",
+      "username": "Player4",
       "final_ranking": 3,
       "final_score": 16400,
-      "final_point": -23.6
+      "final_point": -13.6
     }
   ],
   "round_records": [

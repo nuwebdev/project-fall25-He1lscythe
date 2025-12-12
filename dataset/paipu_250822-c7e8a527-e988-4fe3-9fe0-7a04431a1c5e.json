@@ -6,28 +6,28 @@
   "session_players": [
     {
       "seat": 0,
-      "username": "Player1",
+      "username": "YuuNecro",
       "final_ranking": 4,
       "final_score": 3500,
       "final_point": -56.5
     },
     {
       "seat": 1,
-      "username": "Player2",
+      "username": "Inui",
       "final_ranking": 1,
       "final_score": 55400,
       "final_point": 55.4
     },
     {
       "seat": 2,
-      "username": "Player3",
+      "username": "Hellscythe",
       "final_ranking": 2,
       "final_score": 39500,
       "final_point": 19.5
     },
     {
       "seat": 3,
-      "username": "YuuNecro",
+      "username": "Eucliwood",
       "final_ranking": 3,
       "final_score": 21600,
       "final_point": -18.4

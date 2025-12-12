@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "MahJong game backend with PostgreSQL",
   "type": "module",
-  "main": "server.js",
+  "main": "src/server.js",
   "prisma": {
     "seed": "node prisma/seed.js"
   },
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js",
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio --port 5556",

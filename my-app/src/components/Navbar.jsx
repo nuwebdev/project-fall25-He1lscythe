@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
 const Navbar = ({ onHeightChange }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   const location = useLocation();
   const navRef = useRef(null);
   const { user, logout } = useAuth();
@@ -19,7 +20,6 @@ const Navbar = ({ onHeightChange }) => {
       { path: '/search', name: 'Search'}
     ])
   ];
-  
 
   // current page
   const isActive = (path) => {
@@ -34,6 +34,10 @@ const Navbar = ({ onHeightChange }) => {
       onHeightChange(navRef.current.offsetHeight);
     }
   }, [onHeightChange]);
+
+  const handleProfileClick = () => {
+    navigate('/profile');
+  };
   
   return (
     // bind navRef to navbar, trigger useEffect
@@ -87,7 +91,8 @@ const Navbar = ({ onHeightChange }) => {
           {/* login + Sign Up */}
           {user?.username ? (
             <div className="hidden md:flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center" title={user.username}>
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center" title={user.username}
+              onClick={() => handleProfileClick()} >
                 <span className="text-white font-bold text-xl">{user.username[0]}</span>
               </div>
               <button

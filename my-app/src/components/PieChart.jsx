@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
-const RankingPieChart = ({ gsData, username }) => {
+const RankingPieChart = ({ gsData, userId }) => {
   const rankingData = useMemo(() => {
     const rankingCount = { 1: 0, 2: 0, 3: 0, 4: 0 };
 
     gsData.forEach(item => {
-      rankingCount[item.session_players.find(p => p.fk_user_id.username === username).final_ranking]++;
+      rankingCount[item.session_players.find(p => p.user_id === userId).final_ranking]++;
     });
     
     const data = [
@@ -15,13 +15,9 @@ const RankingPieChart = ({ gsData, username }) => {
       { name: '3rd', value: rankingCount[3], percentage: (rankingCount[3] / gsData.length * 100).toFixed(2) },
       { name: '4th', value: rankingCount[4], percentage: (rankingCount[4] / gsData.length * 100).toFixed(2) },
     ];
-    // console.log(rankingCount);
-    
-
     
     return data;
   }, [gsData]);
-  // console.log(gsData);
   
   const COLORS = {
       '1st': '#28a745',
@@ -77,8 +73,6 @@ const RankingPieChart = ({ gsData, username }) => {
       <h2 className="text-4xl font-bold text-gray-800 mb-8 text-center">
         Rankings
       </h2>
-      {/* <p className="invisible text-xs text-gray-800 mb-6 text-center">
-        (based on recent {gsData.length} games)</p> */}
       
       {/* piechart */}
       <div className="flex justify-center items-center">

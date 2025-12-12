@@ -6,14 +6,14 @@
   "session_players": [
     {
       "seat": 0,
-      "username": "YuuNecro",
+      "username": "Player1",
       "final_ranking": 1,
       "final_score": 47500,
       "final_point": 67.5
     },
     {
       "seat": 1,
-      "username": "Player2",
+      "username": "YuuNecro",
       "final_ranking": 3,
       "final_score": 23500,
       "final_point": -16.5

@@ -1,7 +1,7 @@
 {
   "id": "250822-27861180-c5ad-45cc-9de7-4c19015b7313",
   "is_detailed": true,
-  "game_type": 3,
+  "game_type": 1,
   "game_date": "2025-08-22T08:10:14+00:00",
   "session_players": [
     {
@@ -13,24 +13,24 @@
     },
     {
       "seat": 1,
-      "username": "Player2",
+      "username": "Eucliwood",
       "final_ranking": 3,
       "final_score": 17800,
-      "final_point": -12.2
+      "final_point": -22.2
     },
     {
       "seat": 2,
       "username": "Player3",
       "final_ranking": 4,
       "final_score": 1600,
-      "final_point": -38.4
+      "final_point": -58.4
     },
     {
       "seat": 3,
-      "username": "YuuNecro",
+      "username": "Player4",
       "final_ranking": 1,
       "final_score": 44200,
-      "final_point": 34.2
+      "final_point": 64.2
     }
   ],
   "round_records": [

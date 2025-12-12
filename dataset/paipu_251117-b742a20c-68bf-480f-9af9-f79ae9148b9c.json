@@ -1,0 +1,440 @@
+{
+  "id": "251117-b742a20c-68bf-480f-9af9-f79ae9148b9c",
+  "is_detailed": true,
+  "game_type": 3,
+  "game_date": "2025-11-17T07:42:02+00:00",
+  "session_players": [
+    {
+      "seat": 0,
+      "username": "Player1",
+      "final_ranking": 2,
+      "final_score": 21300,
+      "final_point": 1.3
+    },
+    {
+      "seat": 1,
+      "username": "Eucliwood",
+      "final_ranking": 3,
+      "final_score": 16300,
+      "final_point": -13.7
+    },
+    {
+      "seat": 2,
+      "username": "Hellscythe",
+      "final_ranking": 1,
+      "final_score": 69400,
+      "final_point": 59.4
+    },
+    {
+      "seat": 3,
+      "username": "Player4",
+      "final_ranking": 4,
+      "final_score": -7000,
+      "final_point": -47.0
+    }
+  ],
+  "round_records": [
+    {
+      "idx": 0,
+      "wind": 0,
+      "dealer": 0,
+      "honba": 0,
+      "kyotaku": 0,
+      "renchan": true,
+      "ryukyoku": false,
+      "players": [
+        {
+          "seat": 0,
+          "win": true,
+          "tsumo": true,
+          "lose": false,
+          "fuulu": true,
+          "reach": false,
+          "tenpai": false,
+          "fan": 3,
+          "fu": 30,
+          "startingscore": 25000,
+          "deltascore": 7000,
+          "endingscore": 32000
+        },
+        {
+          "seat": 1,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": true,
+          "reach": false,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 25000,
+          "deltascore": -2000,
+          "endingscore": 23000
+        },
+        {
+          "seat": 2,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": false,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 25000,
+          "deltascore": -2000,
+          "endingscore": 23000
+        },
+        {
+          "seat": 3,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": true,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 25000,
+          "deltascore": -3000,
+          "endingscore": 22000
+        }
+      ]
+    },
+    {
+      "idx": 1,
+      "wind": 0,
+      "dealer": 0,
+      "honba": 1,
+      "kyotaku": 0,
+      "renchan": false,
+      "ryukyoku": false,
+      "players": [
+        {
+          "seat": 0,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": false,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 32000,
+          "deltascore": -6100,
+          "endingscore": 25900
+        },
+        {
+          "seat": 1,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": true,
+          "reach": false,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 23000,
+          "deltascore": -3100,
+          "endingscore": 19900
+        },
+        {
+          "seat": 2,
+          "win": true,
+          "tsumo": true,
+          "lose": false,
+          "fuulu": false,
+          "reach": true,
+          "tenpai": false,
+          "fan": 6,
+          "fu": 20,
+          "startingscore": 23000,
+          "deltascore": 12300,
+          "endingscore": 35300
+        },
+        {
+          "seat": 3,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": false,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 22000,
+          "deltascore": -3100,
+          "endingscore": 18900
+        }
+      ]
+    },
+    {
+      "idx": 2,
+      "wind": 0,
+      "dealer": 1,
+      "honba": 0,
+      "kyotaku": 0,
+      "renchan": true,
+      "ryukyoku": true,
+      "players": [
+        {
+          "seat": 0,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": false,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 25900,
+          "deltascore": -1000,
+          "endingscore": 24900
+        },
+        {
+          "seat": 1,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": true,
+          "tenpai": true,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 19900,
+          "deltascore": 2000,
+          "endingscore": 21900
+        },
+        {
+          "seat": 2,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": false,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 35300,
+          "deltascore": -1000,
+          "endingscore": 34300
+        },
+        {
+          "seat": 3,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": false,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 18900,
+          "deltascore": -1000,
+          "endingscore": 17900
+        }
+      ]
+    },
+    {
+      "idx": 3,
+      "wind": 0,
+      "dealer": 1,
+      "honba": 1,
+      "kyotaku": 1,
+      "renchan": false,
+      "ryukyoku": false,
+      "players": [
+        {
+          "seat": 0,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": false,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 24900,
+          "deltascore": -2100,
+          "endingscore": 22800
+        },
+        {
+          "seat": 1,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": false,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 21900,
+          "deltascore": -4100,
+          "endingscore": 17800
+        },
+        {
+          "seat": 2,
+          "win": true,
+          "tsumo": true,
+          "lose": false,
+          "fuulu": false,
+          "reach": true,
+          "tenpai": false,
+          "fan": 5,
+          "fu": 30,
+          "startingscore": 34300,
+          "deltascore": 9300,
+          "endingscore": 43600
+        },
+        {
+          "seat": 3,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": false,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 17900,
+          "deltascore": -2100,
+          "endingscore": 15800
+        }
+      ]
+    },
+    {
+      "idx": 4,
+      "wind": 0,
+      "dealer": 2,
+      "honba": 0,
+      "kyotaku": 0,
+      "renchan": true,
+      "ryukyoku": true,
+      "players": [
+        {
+          "seat": 0,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": true,
+          "reach": false,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 22800,
+          "deltascore": -1500,
+          "endingscore": 21300
+        },
+        {
+          "seat": 1,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": false,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 17800,
+          "deltascore": -1500,
+          "endingscore": 16300
+        },
+        {
+          "seat": 2,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": false,
+          "tenpai": true,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 43600,
+          "deltascore": 1500,
+          "endingscore": 45100
+        },
+        {
+          "seat": 3,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": true,
+          "reach": false,
+          "tenpai": true,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 15800,
+          "deltascore": 1500,
+          "endingscore": 17300
+        }
+      ]
+    },
+    {
+      "idx": 5,
+      "wind": 0,
+      "dealer": 2,
+      "honba": 1,
+      "kyotaku": 0,
+      "renchan": true,
+      "ryukyoku": false,
+      "players": [
+        {
+          "seat": 0,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": false,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 21300,
+          "deltascore": 0,
+          "endingscore": 21300
+        },
+        {
+          "seat": 1,
+          "win": false,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": false,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 16300,
+          "deltascore": 0,
+          "endingscore": 16300
+        },
+        {
+          "seat": 2,
+          "win": true,
+          "tsumo": false,
+          "lose": false,
+          "fuulu": false,
+          "reach": false,
+          "tenpai": false,
+          "fan": 8,
+          "fu": 50,
+          "startingscore": 45100,
+          "deltascore": 24300,
+          "endingscore": 69400
+        },
+        {
+          "seat": 3,
+          "win": false,
+          "tsumo": false,
+          "lose": true,
+          "fuulu": false,
+          "reach": true,
+          "tenpai": false,
+          "fan": 0,
+          "fu": 0,
+          "startingscore": 17300,
+          "deltascore": -24300,
+          "endingscore": -7000
+        }
+      ]
+    }
+  ]
+}

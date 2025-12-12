@@ -74,7 +74,7 @@ class ApiService {
     localStorage.removeItem('user');
   }
 
-  // ============ do not need Auth ============
+  // ============ /api/gametype/* ============
 
   static async getGameTypeList() {
     return this.request('/gametype/list', {
@@ -88,35 +88,13 @@ class ApiService {
     });
   }
 
+  // ============ /api/gamesession/* ============
+
   static async uploadGameSession(gameData) {
-    return this.request('/upload/gamerecord', {
+    console.log('gamedata', gameData);
+    return this.request('/gamesession/upload', {
       method: 'POST',
       body: JSON.stringify(gameData)
-    });
-  }
-
-  //const { userId, page = '1', limit = '100', from, to } = req.query;
-  //GET /api/stats/games?userId=xxx&page=1&limit=100&from=2023-01-01&to=2025-11-30
-  static async getGameSession(f = {}) {
-    const s = new URLSearchParams(
-      Object.fromEntries(
-        Object.entries(f).filter(([_, v]) => v !== undefined && v !== null && v !== '')
-      )
-    );
-    return this.request(`/player/gamesession${s ? `?${s}` : ''}`, {
-      method: 'GET',
-    });
-  }
-
-  static async getRoundPlayers(f = {}) {
-    const s = new URLSearchParams(
-      Object.fromEntries(
-        Object.entries(f).filter(([_, v]) => v !== undefined && v !== null && v !== '')
-      )
-    );
-    
-    return this.request(`/player/roundplayers${s ? `?${s}` : ''}`, {
-      methos: 'GET',
     });
   }
 
@@ -128,15 +106,60 @@ class ApiService {
     });
   }
 
-  // app.get('/api/player/search',
-  static async searchUser(q) {
-    return this.request(`/player/search?q=${encodeURIComponent(q)}`, {
+  // ============ /api/user/* ============
+
+  //GET ?userId=xxx&page=1&limit=100&from=2023-01-01&to=2025-11-30
+  static async getGameSession(f = {}) {
+    const s = new URLSearchParams(
+      Object.fromEntries(
+        Object.entries(f).filter(([_, v]) => v !== undefined && v !== null && v !== '')
+      )
+    );
+    return this.request(`/user/gamesession${s ? `?${s}` : ''}`, {
+      method: 'GET',
+    });
+  }
+
+  static async getRoundPlayers(f = {}) {
+    const s = new URLSearchParams(
+      Object.fromEntries(
+        Object.entries(f).filter(([_, v]) => v !== undefined && v !== null && v !== '')
+      )
+    );
+    
+    return this.request(`/user/roundplayers${s ? `?${s}` : ''}`, {
+      method: 'GET',
+    });
+  }
+
+  static async getDataGrid(id) {
+    return this.request(`/user/datagrid/${id}`, {
+      method: 'GET',
+    });
+  }
+
+  // app.get('/api/user/search',
+  static async searchUser(q, id = null) {
+    const s = new URLSearchParams({ q });
+    if (id) s.append('id', id);
+    return this.request(`/user/search?${s}`, {
       method: 'GET',
     });
   }
 
   static async getUserById(id) {
     return this.request(`/user/${id}`, {
+      method: 'GET',
+    });
+  }
+
+  static async comparePoints(f = {}) {
+    const s = new URLSearchParams(
+      Object.fromEntries(
+        Object.entries(f).filter(([_, v]) => v !== undefined && v !== null && v !== '')
+      )
+    );
+    return this.request(`/user/comparepoints${s ? `?${s}` : ''}`, {
       method: 'GET',
     });
   }
@@ -167,12 +190,6 @@ class ApiService {
     return this.request(`/admin/user/${userId}/status`, {
       method: 'PUT',
       body: JSON.stringify({ status })
-    });
-  }
-
-  static async adminGetUserGames(userId) {
-    return this.request(`/admin/user/${userId}/games`, {
-      method: 'GET',
     });
   }
 

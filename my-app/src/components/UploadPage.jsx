@@ -455,8 +455,6 @@ const WholeGame = ({ playersName, rules, gameDateTime }) => {
   const [kyokuList, setKyokuList] = useState([]);
   const [scoreChangesMap, setScoreChangesMap] = useState({});
   const [playerStatesMap, setPlayerStatesMap] = useState({});
-  const [gameData, setGameData] = useState({});
-  const [jsFileImported, setImported] = useState(false);
   const initialScores = rules.id === 2
     ? [30000, 30000, 30000, 30000]
     : [25000, 25000, 25000, 25000];
@@ -466,7 +464,9 @@ const WholeGame = ({ playersName, rules, gameDateTime }) => {
   const [errors, setErrors] = useState({});
   const [succeed, setSucceed] = useState({});
   const [loading, setLoading] = useState(false);
-  
+
+  let gameData = {};
+  let jsFileImported = false;
 
   // recalculate honba kyoku etc
   const recalKyokuList = (arr) => {
@@ -683,8 +683,8 @@ const WholeGame = ({ playersName, rules, gameDateTime }) => {
             fuulu: states.playersFuulu?.[seat] || false,
             reach: states.playersReach?.[seat] || false,
             tenpai: states.playersTenpai?.[seat] || false,
-            fan: states.playersFan?.[seat] || 1,
-            fu: states.playersFu?.[seat] || 30,
+            fan: states.playersWin?.[seat] ? (states.playersFan?.[seat] || 1) : 0,
+            fu: states.playersWin?.[seat] ? (states.playersFu?.[seat] || 30) : 0,
             startingscore: prevScores[seat],
             deltascore: changes[seat] || 0,
             endingscore: currScores[seat] || 0
@@ -695,7 +695,7 @@ const WholeGame = ({ playersName, rules, gameDateTime }) => {
       // console.log(roundRecords);
       // console.log(kyokuList);
       if (jsFileImported === false && Object.keys(gameData).length === 0) {
-        setGameData({
+        gameData = {
           is_detailed: true,
           game_type: rules.id,
           game_date: gameDateTime.toISOString(),
@@ -707,7 +707,7 @@ const WholeGame = ({ playersName, rules, gameDateTime }) => {
             final_point: finalPoints[seat]
           })),
           round_records: roundRecords
-        });
+        };
       }
 
       if (submit) {
@@ -736,8 +736,8 @@ const WholeGame = ({ playersName, rules, gameDateTime }) => {
 
   const handleImport = (data) => {
     // console.log('Imported data:', data);
-    setGameData(data);
-    setImported(true);
+    gameData = data;
+    jsFileImported = true;
   };
   // console.log(gameData);
   // console.log(jsFileImported);
